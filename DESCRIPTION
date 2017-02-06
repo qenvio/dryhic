@@ -1,5 +1,5 @@
 Package: dryhic
-Title: Some functions to handle HiC data
+Title: Some Functions to Handle HiC Data
 Version: 0.0.0.9000
 Authors@R: person("Enrique", "Vidal", email = "enrique.vidal@crg.eu", role = c("aut", "cre"))
 Description: A collection of functions to create and manipulate HiC contact
@@ -15,3 +15,4 @@ Imports: magrittr,
     Matrix,
     mgcv,
     dplyr
+Suggests: dryhicdata
