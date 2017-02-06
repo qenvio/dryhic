@@ -12,7 +12,7 @@
 
 oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res)){
 
-    fit <- gam(as.formulat(form), data = dat, family = nb())
+    fit <- gam(as.formula(form), data = dat, family = nb())
 
     sqrt(fit$fitted.values / mean(fit$fitted.values))
 
