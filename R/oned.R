@@ -14,7 +14,7 @@
 
 oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res)){
 
-    mgcv::fit <- gam(as.formula(form), data = dat, family = mgcv::nb())
+    fit <- mgcv::gam(as.formula(form), data = dat, family = mgcv::nb())
 
     sqrt(fit$fitted.values / mean(fit$fitted.values))
 
