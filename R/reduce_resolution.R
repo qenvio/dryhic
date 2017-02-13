@@ -12,6 +12,21 @@
 
 reduce_resolution <- function(mat, newreso){
 
+    oldreso <- rownames(mat) %>%
+        strsplit(":") %>%
+        do.call(rbind, .) %>%
+        as.data.frame %>%
+        setNames(c("chr", "pos")) %>%
+        mutate(pos = as.integer(pos)) %>%
+        group_by(chr) %>%
+        arrange(pos) %>%
+        summarize(m = diff(pos) %>% min) %>%
+        ungroup  %>%
+        summarize(m = min(m)) %$%
+        m
+
+    if(oldreso == newreso) return(mat)
+    
     ids <- rownames(mat)
     chrs <- gsub(":.*$", "", ids)
     pos <- gsub("^.*:", "", ids) %>% as.numeric
