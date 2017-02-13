@@ -11,7 +11,7 @@
 #' plot(0)
 
 reduce_resolution <- function(mat, newreso){
-
+    
     oldreso <- rownames(mat) %>%
         strsplit(":") %>%
         do.call(rbind, .) %>%
@@ -26,12 +26,12 @@ reduce_resolution <- function(mat, newreso){
         m
 
     if(oldreso == newreso) return(mat)
-    
+
     ids <- rownames(mat)
     chrs <- gsub(":.*$", "", ids)
-    pos <- gsub("^.*:", "", ids) %>% as.numeric
+    pos <- gsub("^.*:", "", ids) %>% as.integer
 
-    newpos <- floor(pos / newreso) * newreso
+    newpos <- as.integer(floor(pos / newreso) * newreso)
 
     newids <- paste(chrs, newpos, sep = ":")
 
@@ -39,8 +39,10 @@ reduce_resolution <- function(mat, newreso){
 
     newmat <- m %*% (mat %*% t(m))
 
-    colnames(newmat) <- rownames(newmat) <- rownames(newids)
+    bins <- rownames(mat)[rownames(mat) %in% rownames(newmat)]
 
-    as(newmat, class(mat))
+    i <- match(bins, rownames(newmat))
+    
+    as(newmat[i,i], class(mat))
 
 }
