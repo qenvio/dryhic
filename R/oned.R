@@ -16,7 +16,9 @@ oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res)){
 
     fit <- mgcv::gam(as.formula(form), data = dat, family = mgcv::nb())
 
-    sqrt(fit$fitted.values / mean(fit$fitted.values))
+    out <- predict(fit, newdata = dat, type = "response")
+    out[is.na(dat$tot)] <- NA
+    sqrt(out / mean(out, na.rm = T))
 
 }
 
