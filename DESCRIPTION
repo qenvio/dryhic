@@ -6,7 +6,7 @@ Description: A collection of functions to create and manipulate HiC contact
     matrices in R: Data retrieval, sumbsampling, resolution changes, bias
 	correction and plotting.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
