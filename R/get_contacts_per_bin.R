@@ -17,7 +17,7 @@
 get_contacts_per_bin <- function(inbam, resolution, region = NULL,
                                  pos, filtin = 0, filtex = 783){
     
-    script_file <- system.file("src", "bam_to_bin.sh", package = "hicutils")
+    script_file <- system.file("src", "bam_to_bin.sh", package = "dryhic")
     
     out <- paste(script_file,
                  "-f", filtin,

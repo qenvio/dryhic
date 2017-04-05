@@ -21,11 +21,11 @@ get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
 
     if(whole){
         
-        script_file <- system.file("src", "bam_to_mat_whole.sh", package = "hicutils")
+        script_file <- system.file("src", "bam_to_mat_whole.sh", package = "dryhic")
 
     }else{
 
-        script_file <- system.file("src", "bam_to_mat.sh", package = "hicutils")
+        script_file <- system.file("src", "bam_to_mat.sh", package = "dryhic")
         
     }
     
