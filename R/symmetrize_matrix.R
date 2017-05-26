@@ -23,8 +23,12 @@ symmetrize_matrix <- function(mat){
 
     }
 
+    bins <- rownames(mat)
+    
     mat <- mat + t(mat)
 
+    rownames(mat) <- colnames(mat) <- bins
+    
     mat
 
 }
