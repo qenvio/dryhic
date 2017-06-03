@@ -6,7 +6,7 @@ dryhic is a set of tools to manipulate HiC data.
 
 ## Installation
 
-You can install the package using the handy `devtools::install_github`. It's highly recommended to install also the accompaining [dryhicdata](https://github.com/qenvio/dryhicdata) package, containing some useful data.
+You can install the package using the handy `devtools::install_github`. It's highly recommended to install also the accompanying [dryhicdata](https://github.com/qenvio/dryhicdata) package, containing some useful data.
 
 ``` r
 
@@ -14,6 +14,25 @@ devtools::install_packages("qenvio/dryhic")
 devtools::install_packages("qenvio/dryhicdata")
 
 ```
+
+Alternatively, you can download, unzip and install the package manually (only UNIX)
+
+``` sh
+
+wget https://github.com/qenvio/dryhic/archive/master.zip
+unzip master.zip
+mv dryhic-master dryhic
+sudo R CMD INSTALL dryhic
+
+rm master.zip
+
+wget https://github.com/qenvio/dryhicdata/archive/master.zip
+unzip master.zip
+mv dryhicdata-master dryhicdata
+sudo R CMD INSTALL dryhicdata
+
+```
+
 
 ## Usage
 
@@ -67,7 +86,7 @@ str(enzymes_hg38)
 
 ```
 
-The experiment was performed using HindIII restrinction enzyme, so we gather this information
+The experiment was performed using HindIII restriction enzyme, so we gather this information
 
 ``` r
 
@@ -89,7 +108,7 @@ As a sanity check, we should be sure that both the contact matrix and the genomi
 
 common_bins <- intersect(info$bin, rownames(mat))
 
-# whatch out! this step orders chromosomes alphabetically
+# watch out! this step orders chromosomes alphabetically
 
 info <- filter(info, bin %in% common_bins) %>%
 	 	arrange(chr, pos)
@@ -100,7 +119,7 @@ mat <- mat[i, i]
 
 ```
 
-Now we can compute the total coverage per bin and the proportion of non-zero entires
+Now we can compute the total coverage per bin and the proportion of non-zero entries
 
 ``` r
 
@@ -111,7 +130,7 @@ info$nozero <- Matrix::rowMeans(mat != 0)
 
 ### Filter out problematic bins
 
-Some loci in the genome have a very poor coverage. We can filter them out based both on the HiC matrix (namely, all bins wihout any coverage and those presenting a very high proporiton of void cells). We can furher filter out bins with low mappability and with no restriction enzyme sites.
+Some loci in the genome have a very poor coverage. We can filter them out based both on the HiC matrix (namely, all bins without any coverage and those presenting a very high proportion of void cells). We can further filter out bins with low mappability and with no restriction enzyme sites.
 
 ``` r
 
@@ -127,7 +146,7 @@ mat <- mat[i, i]
 
 ```
 
-### Grahical representation
+### Graphical representation
 
 In order to have a look at the data, we can select a region and create a contact map.
 
@@ -139,8 +158,8 @@ bins_chr17 <- which(info$chr == "chr17")
 
 mat_chr17 <- mat[bins_chr17, bins_chr17]
 
-logfinite(mat_chr17) %>% image(useRaster = T, main = "RAW data",
-					 	 	   col.regions = bw(256), colorkey = F)
+logfinite(mat_chr17) %>% image(useRaster = TRUE, main = "RAW data",
+					 	 	   col.regions = bw(256), colorkey = FALSE)
 
 ```
 
@@ -156,8 +175,8 @@ mat_ice <- ICE(mat, 30)
 
 ice_chr17 <- mat_ice[bins_chr17, bins_chr17]
 
-logfinite(ice_chr17) %>% image(useRaster = T, main = "ICE",
-					 	 	   col.regions = bw(256), colorkey = F)
+logfinite(ice_chr17) %>% image(useRaster = TRUE, main = "ICE",
+					 	 	   col.regions = bw(256), colorkey = FALSE)
 
 ```
 
@@ -173,8 +192,8 @@ mat_oned <- correct_mat_from_b(mat, info$oned)
 
 oned_chr17 <- mat_oned[bins_chr17, bins_chr17]
 
-logfinite(oned_chr17) %>% image(useRaster = T, main = "oned",
-					 	 	   col.regions = bw(256), colorkey = F)
+logfinite(oned_chr17) %>% image(useRaster = TRUE, main = "oned",
+					 	 	   col.regions = bw(256), colorkey = FALSE)
 
 
 ```
