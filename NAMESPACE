@@ -20,3 +20,7 @@ importFrom(dplyr,mutate)
 importFrom(dplyr,slice)
 importFrom(dplyr,summarize)
 importFrom(mgcv,gam)
+
+# Well, sorry about that roxygen2, here are my hand edits.
+useDynLib(dryhic)
+export(fitcnv)
