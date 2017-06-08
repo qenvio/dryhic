@@ -17,8 +17,12 @@ oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res)){
     fit <- mgcv::gam(as.formula(form), data = dat, family = mgcv::nb())
 
     out <- predict(fit, newdata = dat, type = "response")
-    out[is.na(dat$tot)] <- NA
-    sqrt(out / mean(out, na.rm = T))
+
+    i_na <- is.na(dat[, all.vars(form)[1]])
+    
+    out[which(i_na)] <- NA
+    
+    as.numeric(sqrt(out / mean(out, na.rm = T)))
 
 }
 
