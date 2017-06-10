@@ -74,7 +74,7 @@ fitcnv <- function (x) {
 
          # Use Mahalanobis distances to compute the weights.
          if (!is.infinite(nu)) {
-            mahalanobis <- sum(abs(x-mu[i]))/sqrt(s2)
+            mahalanobis <- sum(abs(x-mu[i]), na.rm=TRUE)/sqrt(s2)
             weights[,i] <- (nu+1) / (nu + mahalanobis)
          }
       }
