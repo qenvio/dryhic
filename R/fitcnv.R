@@ -9,9 +9,10 @@ fitcnv <- function (x) {
 ###############################################
 
    stopifnot(is.vector(x))
+   x[x <= quantile(x, .05, na.rm=TRUE)/2] = NA
 
    # Valid copy numbers.
-   CN <- c(1, 2, 3, 4, 5, 6, 8)
+   CN <- c(1, 2, 3, 4, 10)
 
    # Dimensions of the problem.
    m <- length(CN)
@@ -28,7 +29,7 @@ fitcnv <- function (x) {
    nu <- 6
 
    # Initial probabilities.
-   initial.prob <- c(2, 20, 3, 2, 1, 1, 1) / 30
+   initial.prob <- rep(1/m, m)
 
 
 
@@ -202,6 +203,6 @@ fitcnv <- function (x) {
 
     ViterbiPath <- Viterbi(Q, initial.prob, emission.prob)
 
-    return(list(mu[1], ViterbiPath))
+    return(list(mu[1], CN[ViterbiPath]))
 
 }
