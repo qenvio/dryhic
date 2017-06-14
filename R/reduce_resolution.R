@@ -27,7 +27,7 @@ reduce_resolution <- function(mat, newreso){
 
     if(oldreso == newreso) return(mat)
 
-    if((oldreso %% newreso) != 0) stop("New resolution should be multiple of the original one")
+    if((newreso %% oldreso) != 0) stop("New resolution should be multiple of the original one")
     
     ids <- rownames(mat)
     chrs <- gsub(":.*$", "", ids)
