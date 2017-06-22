@@ -93,8 +93,8 @@ The experiment was performed using HindIII restriction enzyme, so we gather this
 # get genomic information
 
 info <- mutate(enzymes_hg38,
-			   res = HindIII) %>%
-		select(chr, pos, res) %>%
+               res = HindIII) %>%
+        select(chr, pos, res) %>%
 		inner_join(bias_hg38) %>%
 		mutate(bin = paste0(chr, ":", pos))
 
@@ -111,7 +111,7 @@ common_bins <- intersect(info$bin, rownames(mat))
 # watch out! this step orders chromosomes alphabetically
 
 info <- filter(info, bin %in% common_bins) %>%
-	 	arrange(chr, pos)
+        arrange(chr, pos)
 
 i <- match(info$bin, rownames(mat))
 
@@ -135,7 +135,7 @@ Some loci in the genome have a very poor coverage. We can filter them out based 
 ``` r
 
 info <- filter(info,
-			   map > .5,
+               map > .5,
 			   res > 0,
 			   tot > 0,
 			   nozero > .05 * median(nozero))
@@ -159,7 +159,7 @@ bins_chr17 <- which(info$chr == "chr17")
 mat_chr17 <- mat[bins_chr17, bins_chr17]
 
 logfinite(mat_chr17) %>% image(useRaster = TRUE, main = "RAW data",
-					 	 	   col.regions = bw(256), colorkey = FALSE)
+                               col.regions = bw(256), colorkey = FALSE)
 
 ```
 
@@ -176,7 +176,7 @@ mat_ice <- ICE(mat, 30)
 ice_chr17 <- mat_ice[bins_chr17, bins_chr17]
 
 logfinite(ice_chr17) %>% image(useRaster = TRUE, main = "ICE",
-					 	 	   col.regions = bw(256), colorkey = FALSE)
+                               col.regions = bw(256), colorkey = FALSE)
 
 ```
 
@@ -193,9 +193,57 @@ mat_oned <- correct_mat_from_b(mat, info$oned)
 oned_chr17 <- mat_oned[bins_chr17, bins_chr17]
 
 logfinite(oned_chr17) %>% image(useRaster = TRUE, main = "oned",
-					 	 	   col.regions = bw(256), colorkey = FALSE)
+                                col.regions = bw(256), colorkey = FALSE)
 
 
 ```
 ![](oned.png)
 
+### Copy number estimation
+
+Once OneD bias removal has been applies, we can uset this result to estimate the
+number of copies
+
+``` r
+
+# get total number of bias-corrected contacts per bin
+
+info$tot_oned <- rowSums(mat_oned)[info$bin]
+
+# estimate CN 
+
+info$cn <- fitcnv(info$tot_oned)[[2]]
+
+# apply correction (the 1 / 2 factor is applied because most of the genome is diploid)
+
+mat_onedcn <- correct_mat_from_b(mat_oned, sqrt(info$cn / 2))
+info$tot_onedcn <- rowSums(mat_onedcn)[info$bin]
+
+
+```
+
+We can plot the total number of contacts per bin to check bias removal and CN
+normalization
+
+``` r
+
+
+with(info[bins_chr17,], plot(pos / 1e6, tot,
+                             type = "l", las = 1, col = rgb(0, 0, 0, .5),
+							 bty = "l",
+							 xlab = "Genomic position / Mbp",
+							 ylab = "Number of contacts per bin"))
+
+with(info[bins_chr17,], lines(pos / 1e6, tot_oned,
+                              col = rgb(1, 0, 0, .5)))
+
+with(info[bins_chr17,], lines(pos / 1e6, tot_onedcn,
+                              col = rgb(0, 0, 1, .5)))
+
+legend("topleft", legend = c("raw", "OneD", "OneD + CN"), lty = 1,
+       col = c("black", "red", "blue"), bty = "n")
+
+
+```
+
+![](cn.png)
