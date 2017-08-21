@@ -10,8 +10,10 @@ You can install the package using the handy `devtools::install_github`. It's hig
 
 ``` r
 
-devtools::install_packages("qenvio/dryhic")
-devtools::install_packages("qenvio/dryhicdata")
+install.packages("devtools")
+
+devtools::install_github("qenvio/dryhic")
+devtools::install_github("qenvio/dryhicdata")
 
 ```
 
