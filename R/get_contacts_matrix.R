@@ -19,13 +19,31 @@
 get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
                                 whole = F, filtin = 0, filtex = 783){
 
+    file_size <- file.info(inbam)$size  / 1024 / 1024 / 1024
+    
     if(whole){
-        
-        script_file <- system.file("src", "bam_to_mat_whole.sh", package = "dryhic")
+
+        if(file_size > 10){
+            
+            script_file <- system.file("src", "bam_to_mat_whole_big.sh", package = "dryhic")
+
+        }else{
+            
+            script_file <- system.file("src", "bam_to_mat_whole.sh", package = "dryhic")
+
+        }
 
     }else{
 
-        script_file <- system.file("src", "bam_to_mat.sh", package = "dryhic")
+        if(file_size > 10){
+            
+            script_file <- system.file("src", "bam_to_mat_big.sh", package = "dryhic")
+
+        }else{
+            
+            script_file <- system.file("src", "bam_to_mat.sh", package = "dryhic")
+
+        }
         
     }
     
