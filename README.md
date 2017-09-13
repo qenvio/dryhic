@@ -96,7 +96,7 @@ The experiment was performed using HindIII restriction enzyme, so we gather this
 
 info <- mutate(enzymes_hg38,
                res = HindIII) %>%
-        select(chr, pos, res) %>%
+        dplyr::select(chr, pos, res) %>%
 		inner_join(bias_hg38) %>%
 		mutate(bin = paste0(chr, ":", pos))
 
