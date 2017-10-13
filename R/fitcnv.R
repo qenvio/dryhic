@@ -3,6 +3,7 @@ fitcnv <- function (x) {
    # Constants.
    MAXITER = 500
    TOLERANCE = 1e-3
+   MCHNEPS = .Machine$double.eps
 
 ###############################################
 #              OPTION PROCESSING              #
@@ -98,6 +99,9 @@ fitcnv <- function (x) {
       loglik <<- forwardback[[9]]
       phi <<- forwardback[[7]]
       transitions <- matrix(forwardback[[8]], nrow=m)
+
+      # Prevent underflow.
+      transitions[transitions < MCHNEPS] <- MCHNEPS
 
       Q <<- transitions / rowSums(transitions)
       phi.weights <<- phi * weights
