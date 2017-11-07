@@ -13,10 +13,10 @@ fitcnv <- function (x) {
    x[x <= quantile(x, .05, na.rm=TRUE)/2] = NA
 
    # Valid copy numbers. The last is open-ened (8 or more).
-   CN <- c(1, 2, 3, 4, 5, 6, 7, 8)
+   CN <- c(1, 2, 3, 4, 5, 6, 7)
 
    # Dimensions of the problem.
-   m <- length(CN)
+   m <- length(CN) + 1
    n <- length(x)
 
    # Transition parameters.
@@ -25,7 +25,7 @@ fitcnv <- function (x) {
 
    # Emission parameters (initial values).
    sz <- median(x, na.rm=TRUE) / 2
-   mu <- sz * CN
+   mu <- sz * c(CN, m)
    s2 <- var(x, na.rm=TRUE)
    nu <- 6
 
@@ -113,10 +113,10 @@ fitcnv <- function (x) {
   update.mu <- function() {
      sumPhi.weights.x <- colSums(phi.weights*x, na.rm = TRUE)
      sumPhi.weights <- colSums(phi.weights, na.rm = TRUE)
-     sz <- sum(CN*sumPhi.weights.x) / sum(CN^2*sumPhi.weights)
+     sz <- sum(CN*sumPhi.weights.x[-m]) / sum(CN^2*sumPhi.weights[-m])
      opnd <- sumPhi.weights.x[m] / sumPhi.weights[m]
      mu <- sz * CN
-     if (mu[m] < opnd) mu[m] <- opnd
+     mu[m] <- max(sz*m, opnd)
      return (mu)
   }
 
@@ -210,6 +210,10 @@ fitcnv <- function (x) {
 
     ViterbiPath <- Viterbi(Q, initial.prob, emission.prob)
 
-    return(list(mu[1], CN[ViterbiPath]))
+    # Get the copy number and correct the open-ended state.
+    cn <- ViterbiPath
+    cn[ViterbiPath == m] <-  mu[m] / mu[1]
+
+    return(list(mu[1], cn))
 
 }
