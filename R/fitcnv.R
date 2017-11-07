@@ -12,18 +12,18 @@ fitcnv <- function (x) {
    stopifnot(is.vector(x))
    x[x <= quantile(x, .05, na.rm=TRUE)/2] = NA
 
-   # Valid copy numbers.
-   CN <- c(1, 2, 3, 4, 10)
+   # Valid copy numbers. The last is open-ened (8 or more).
+   CN <- c(1, 2, 3, 4, 5, 6, 7, 8)
 
    # Dimensions of the problem.
    m <- length(CN)
    n <- length(x)
 
-   # Transition parameters (28).
+   # Transition parameters.
    Q <- matrix(0.1/(m-1), ncol = m, nrow = m);
    diag(Q) <- 0.9;
 
-   # Emission parameters (3).
+   # Emission parameters (initial values).
    sz <- median(x, na.rm=TRUE) / 2
    mu <- sz * CN
    s2 <- var(x, na.rm=TRUE)
@@ -108,12 +108,15 @@ fitcnv <- function (x) {
 
   }
 
-  # Update the means according to the model matrix.
+  # Update the means. Here we maintain the constraints on the
+  # lower states, but not on the higest that is open-ended.
   update.mu <- function() {
      sumPhi.weights.x <- colSums(phi.weights*x, na.rm = TRUE)
      sumPhi.weights <- colSums(phi.weights, na.rm = TRUE)
      sz <- sum(CN*sumPhi.weights.x) / sum(CN^2*sumPhi.weights)
+     opnd <- sumPhi.weights.x[m] / sumPhi.weights[m]
      mu <- sz * CN
+     if (mu[m] < opnd) mu[m] <- opnd
      return (mu)
   }
 
