@@ -8,6 +8,10 @@ fitcnv <- function (x) {
 ###############################################
 #              OPTION PROCESSING              #
 ###############################################
+    
+   # Remove NAs
+   i.valid <- !is.na(x)
+   x <- x[i.valid]
 
    stopifnot(is.vector(x))
    x[x <= quantile(x, .05, na.rm=TRUE)/2] = NA
@@ -214,6 +218,11 @@ fitcnv <- function (x) {
     cn <- ViterbiPath
     cn[ViterbiPath == m] <-  mu[m] / mu[1]
 
-    return(list(mu[1], cn))
+    # Arrange NAs
+
+    cn.na <- rep(NA, length(i.valid))
+    cn.na[i.valid] <- cn
+    
+    return(list(mu[1], cn.na))
 
 }
