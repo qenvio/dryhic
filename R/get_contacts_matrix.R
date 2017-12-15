@@ -20,6 +20,8 @@ get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
                                 whole = F, filtin = 0, filtex = 783){
 
     file_size <- file.info(inbam)$size  / 1024 / 1024 / 1024
+
+    if(is.null(region)) whole <- TRUE
     
     if(whole){
 
