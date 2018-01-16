@@ -4,6 +4,11 @@
 
 dryhic is a set of tools to manipulate HiC data.
 
+A detailed description of the method used to remove biases (a.k.a.`OneD`) can be found [here](https://doi.org/10.1101/148254).
+
+> The data used for the benchmak and reproducibility comparisons can be found [here][https://public_docs.crg.es/4DGenome/public_docs/reproducibility_data]
+
+
 ## Installation
 
 You can install the package using the handy `devtools::install_github`. It's highly recommended to install also the accompanying [dryhicdata](https://github.com/qenvio/dryhicdata) package, containing some useful data.
