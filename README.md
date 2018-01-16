@@ -6,7 +6,7 @@ dryhic is a set of tools to manipulate HiC data.
 
 A detailed description of the method used to remove biases (a.k.a.`OneD`) can be found [here](https://doi.org/10.1101/148254).
 
-> The data used for the benchmak and reproducibility comparisons can be found [here][https://public_docs.crg.es/4DGenome/public_docs/reproducibility_data]
+> The data used for the benchmak and reproducibility comparisons can be found [here](https://public_docs.crg.es/4DGenome/public_docs/reproducibility_data)
 
 
 ## Installation
