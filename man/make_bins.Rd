@@ -20,4 +20,3 @@ This function takes a HiC-BAM file and creates a data.frame with the genome binn
 \examples{
 plot(0)
 }
-

@@ -18,4 +18,3 @@ This function takes a upper triangular HiC contact matrix and returns the full s
 \examples{
 plot(0)
 }
-

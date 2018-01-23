@@ -40,4 +40,3 @@ This function takes a HiC contact matrix and creates heatmap-like prepresentatio
 \examples{
 plot(0)
 }
-

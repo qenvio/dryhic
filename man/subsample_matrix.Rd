@@ -20,4 +20,3 @@ This function takes a HiC contact matrix and returns a subsample of it. The inpu
 \examples{
 plot(0)
 }
-

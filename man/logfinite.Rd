@@ -19,4 +19,3 @@ This function takes a vector of values and returns the log10 transformed values 
 x <- c(10, 1000, 4, 0, 0.1)
 logfinite(x)
 }
-

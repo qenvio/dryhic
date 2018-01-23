@@ -23,4 +23,3 @@ Please note that the biases returned are the squarerooted so one can directly ap
 \examples{
 plot(0)
 }
-

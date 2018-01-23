@@ -29,4 +29,3 @@ This function takes a HiC-BAM file and creates a nammed \code{vector} with the t
 \examples{
 plot(0)
 }
-

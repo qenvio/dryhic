@@ -36,4 +36,3 @@ plot(0)
   publisher={Nature Publishing Group}
 }
 }
-

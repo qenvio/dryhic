@@ -22,4 +22,3 @@ The pseudo count equals half the minimum value, exluding zeros.
 x <- c(10, 1000, 4, 0, 0.1)
 logpseudo(x)
 }
-

@@ -31,4 +31,3 @@ This function takes a HiC-BAM file and creates a contact map as a \code{sparse_ 
 \examples{
 plot(0)
 }
-

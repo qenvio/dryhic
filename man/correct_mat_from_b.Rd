@@ -23,4 +23,3 @@ Given a raw contact matrix \eqn{R_{ij}} and a vector of biases \eqn{b_i}, the co
 \examples{
 plot(0)
 }
-

@@ -20,4 +20,3 @@ This function takes a contact matrix and returns the corresponding contact matri
 \examples{
 plot(0)
 }
-
