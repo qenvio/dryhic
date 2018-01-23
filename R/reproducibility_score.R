@@ -59,8 +59,8 @@ reproducibility_score <- function(mat1, mat2, r = 20, mipr = 5){
     
     r <- min(r, nrow(l1)) %>% min(nrow(l2))
 
-    ei1 <- RSpectra::eigs(l1, r, which = "SM")
-    ei2 <- RSpectra::eigs(l2, r, which = "SM")
+    ei1 <- RSpectra::eigs(l1, r, which = "SM") %>% Re
+    ei2 <- RSpectra::eigs(l2, r, which = "SM") %>% Re
    
     ev1 <- matrix(0, nrow(l1), r)
     ev1 <- ei1$vectors[, 1:r]
