@@ -1,3 +1,13 @@
+#' Estimate copy number
+#'
+#' This function takes a vector with the total number of contacts per bin and estimates the copy number
+#' @param x A vector of total contacts per bin. It should be ordered (at least inside each chromosome).
+#' @return A \code{list} with two elements. The first one refers to the average number of counts corresponding to a copy number of two. The second one is a vector of the same length as \code{x} with the estimated copy number.
+#' @useDynLib dryhic
+#' @export
+#' @examples
+#' plot(0)
+
 fitcnv <- function (x) {
 
    # Constants.
