@@ -6,15 +6,22 @@
 #' @importFrom mgcv nb
 #' @param dat A \code{data.frame} with one bin per row containing the total number of contacts and the potential biases as columns.
 #' @param form A \code{formula} describing the  total number of contacts on LHS and the smoothed biases on the RHS (should be compatible with \code{\link{mgcv::gam}})
+#' @param p_fit The proportion of data used to fit the model. \code{NA} or \code{NULL} will use the entire data set
 #' @return A vector of length \code{nrow(dat)} with the biases to correct for.
 #' @details Please note that the biases returned are the squarerooted so one can directly apply \code{\link{correct_mat_from_b}}
 #' @export
 #' @examples
 #' plot(0)
 
-oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res)){
+oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA){
 
-    fit <- mgcv::gam(as.formula(form), data = dat, family = mgcv::nb())
+    if(is.na(p_fit) | is.null(p_fit)){
+        dat0 <- dat
+    }else{
+        dat0 <- dat[sample(nrow(dat), round(nrow(dat) * p_fit)),]
+    }
+    
+    fit <- mgcv::gam(as.formula(form), data = dat0, family = mgcv::nb())
 
     out <- predict(fit, newdata = dat, type = "response")
 
