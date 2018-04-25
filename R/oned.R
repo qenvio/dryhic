@@ -18,6 +18,7 @@ oned <- function(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA){
     if(is.na(p_fit) | is.null(p_fit)){
         dat0 <- dat
     }else{
+        set.seed(20160718)
         dat0 <- dat[sample(nrow(dat), round(nrow(dat) * p_fit)),]
     }
     
