@@ -4,7 +4,7 @@
 \alias{oned}
 \title{Compute oned correction}
 \usage{
-oned(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA)
+oned(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA, seed = 1)
 }
 \arguments{
 \item{dat}{A \code{data.frame} with one bin per row containing the total number of contacts and the potential biases as columns.}
@@ -12,6 +12,8 @@ oned(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA)
 \item{form}{A \code{formula} describing the  total number of contacts on LHS and the smoothed biases on the RHS (should be compatible with \code{\link{mgcv::gam}})}
 
 \item{p_fit}{The proportion of data used to fit the model. \code{NA} or \code{NULL} will use the entire data set}
+
+\item{seed}{Seed number for the sub-sampling (if needed)}
 }
 \value{
 A vector of length \code{nrow(dat)} with the biases to correct for.
