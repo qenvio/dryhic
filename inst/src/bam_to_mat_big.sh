@@ -95,4 +95,4 @@ fi
 
 samtools view -f $filterin -F $filterex $inbam $region | \
     awk -v w=$resolution -v OFS="\t" -v s=$start -v e=$end -v W=1000000 \
-        '$8 >= s && $8 <= e{i = int($4 / w) * w; j = int($8 / w) * w; a[$3 OFS i OFS $3 OFS j] += 1; if(NR % W){for(k in a) print k, a[k]} split("", a)}END{for(k in a) print k, a[k]}'
+        '$8 >= s && $8 <= e{i = int($4 / w) * w; j = int($8 / w) * w; a[$3 OFS i OFS $3 OFS j] += 1; if((NR % W) == 0){for(k in a) print k, a[k]; split("", a)}}END{for(k in a) print k, a[k]}'
