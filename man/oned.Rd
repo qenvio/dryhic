@@ -4,7 +4,8 @@
 \alias{oned}
 \title{Compute oned correction}
 \usage{
-oned(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA, seed = 1)
+oned(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA, seed = 1,
+  model = FALSE)
 }
 \arguments{
 \item{dat}{A \code{data.frame} with one bin per row containing the total number of contacts and the potential biases as columns.}
@@ -14,6 +15,8 @@ oned(dat, form = tot ~ s(map) + s(cg) + s(res), p_fit = NA, seed = 1)
 \item{p_fit}{The proportion of data used to fit the model. \code{NA} or \code{NULL} will use the entire data set}
 
 \item{seed}{Seed number for the sub-sampling (if needed)}
+
+\item{model}{Logical indicating if model should be returned as \code{attribute} "model"}
 }
 \value{
 A vector of length \code{nrow(dat)} with the biases to correct for.

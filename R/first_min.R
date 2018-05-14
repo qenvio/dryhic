@@ -1,0 +1,27 @@
+#' Find first local minimum
+#'
+#' This funciton computes the lowest minimum value of the density estimate of theinput numeric vector
+#' @importFrom dplyr lag
+#' @importFrom dplyr mutate
+#' @importFrom dplyr filter
+#' @importFrom dplyr arrange
+#' @param x A numeric \code{vector} of values.
+#' @return A numeric value of the lower local minimum value of the density estimation.
+#' @export
+#' @examples
+#' plot(0)
+
+first_min <- function(x){
+    x <- na.omit(x)
+    x <- x[x > 0 & x < quantile(x, .99)]
+    density(x) %>%
+        with(data.frame(x = x, y = y)) %>%
+        mutate(d = y - lag(y),
+               s = sign(d),
+               dd = s - lag(s)) %>%
+        filter(x > 0, dd == 2) %>%
+        arrange(x) %>%
+        head(1) %$%
+        x %>%
+        round()
+}

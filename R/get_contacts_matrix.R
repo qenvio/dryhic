@@ -19,13 +19,15 @@
 get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
                                 whole = F, filtin = 0, filtex = 783){
 
+    max_size <- 5 # max size of bam in Gb
+    
     file_size <- file.info(inbam)$size  / 1024 / 1024 / 1024
 
     if(is.null(region)) whole <- TRUE
     
     if(whole){
 
-        if(file_size > 10){
+        if(file_size > max_size){
             
             script_file <- system.file("src", "bam_to_mat_whole_big.sh", package = "dryhic")
 
@@ -37,7 +39,7 @@ get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
 
     }else{
 
-        if(file_size > 10){
+        if(file_size > max_size){
             
             script_file <- system.file("src", "bam_to_mat_big.sh", package = "dryhic")
 
