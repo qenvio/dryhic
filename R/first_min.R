@@ -6,15 +6,18 @@
 #' @importFrom dplyr filter
 #' @importFrom dplyr arrange
 #' @param x A numeric \code{vector} of values.
+#' @param plot \code{logical} indicating if histogram should be plotted.
 #' @return A numeric value of the lower local minimum value of the density estimation.
 #' @export
 #' @examples
 #' plot(0)
 
-first_min <- function(x){
+first_min <- function(x, plot = FALSE){
+
     x <- na.omit(x)
     x <- x[x > 0 & x < quantile(x, .99)]
-    density(x) %>%
+
+    out <- density(x) %>%
         with(data.frame(x = x, y = y)) %>%
         mutate(d = y - lag(y),
                s = sign(d),
@@ -24,4 +27,12 @@ first_min <- function(x){
         head(1) %$%
         x %>%
         round()
+
+    if(plot){
+        hist(x, 100, las = 1)
+        abline(v = out, col = "red")
+    }
+
+    out
+    
 }
