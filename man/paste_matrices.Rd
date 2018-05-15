@@ -11,7 +11,7 @@ paste_matrices(smat1, smat2, mm)
 
 \item{smat2}{Another \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.}
 
-\item{mm}{The maximum distance (in bins) to truncate the data.}
+\item{mm}{The maximum distance (in bp) to truncate the data.}
 }
 \value{
 A \code{data.frame} with the two coordinates (\code{i} and \code{j}) and the number of contacts of each matrix (\code{x1} and \code{x2}).

@@ -3,7 +3,7 @@
 #' This function takes a couple of contact matrices and computes the reproducibility score.
 #' @param mat1 A \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.
 #' @param mat2 Another \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.
-#' @param mm The maximum distance (in bins) to truncate the data.
+#' @param mm The maximum distance (in bp) to truncate the data.
 #' @param resol The matrix resolution (bin size).
 #' @return A list with the estimated SCC and associated std.
 #' @details Please note that mat1 and mat2 are expected to be a matrices of one chromosome (you could obtain them using \code{subset_matrix}).

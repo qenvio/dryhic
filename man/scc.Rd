@@ -11,7 +11,7 @@ scc(mat1, mat2, mm, resol)
 
 \item{mat2}{Another \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.}
 
-\item{mm}{The maximum distance (in bins) to truncate the data.}
+\item{mm}{The maximum distance (in bp) to truncate the data.}
 
 \item{resol}{The matrix resolution (bin size).}
 }

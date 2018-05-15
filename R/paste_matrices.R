@@ -3,7 +3,7 @@
 #' This function takes two sparse matrix of contacts and a maximum distance (in bins) and returns a \code{data.frame} with the contacts of the tow matrices for each pair of positions.
 #' @param smat1 A \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.
 #' @param smat2 Another \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.
-#' @param mm The maximum distance (in bins) to truncate the data.
+#' @param mm The maximum distance (in bp) to truncate the data.
 #' @return A \code{data.frame} with the two coordinates (\code{i} and \code{j}) and the number of contacts of each matrix (\code{x1} and \code{x2}).
 #' @details This is an auxiliary function used by \code{scc}.
 #' @export
