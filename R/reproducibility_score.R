@@ -5,6 +5,7 @@
 #' @param mat2 Another \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.
 #' @param r The number of componentes used in the comparison.
 #' @param mipr Threshold for the j-inverse participation ratio (IPR).
+#' @param na.rm \code{logical} indicating if bins with NA should be removed.
 #' @return The reproducibility score between two matrices.
 #' @details Please note that mat1 and mat2 are expected to be a matrices of one chromosome (you could obtain them using \code{subset_matrix}).
 #' @references \url{https://doi.org/10.1093/bioinformatics/btx152}
@@ -12,25 +13,29 @@
 #' @examples
 #' plot(0)
 
-reproducibility_score <- function(mat1, mat2, r = 20, mipr = 5){
+reproducibility_score <- function(mat1, mat2, r = 20, mipr = 5, na.rm = TRUE){
 
-    na1 <- summary(mat1) %>%
-        filter(is.na(x)) %>%
-        (function(x) c(x$i, x$j) %>% unique)
-
-    na2 <- summary(mat2) %>%
-        filter(is.na(x)) %>%
-        (function(x) c(x$i, x$j) %>% unique)
-
-    if(length(na1) > 0){
+    if(na.rm){
         
-        mat1 <- mat1[-na1, -na1]
+        na1 <- summary(mat1) %>%
+            filter(is.na(x)) %>%
+            (function(x) c(x$i, x$j) %>% unique)
 
-    }
+        na2 <- summary(mat2) %>%
+            filter(is.na(x)) %>%
+            (function(x) c(x$i, x$j) %>% unique)
 
-    if(length(na2) > 0){
+        if(length(na1) > 0){
+            
+            mat1 <- mat1[-na1, -na1]
 
-        mat2 <- mat2[-na2, -na2]
+        }
+
+        if(length(na2) > 0){
+
+            mat2 <- mat2[-na2, -na2]
+
+        }
 
     }
 

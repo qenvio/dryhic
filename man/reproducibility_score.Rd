@@ -4,7 +4,7 @@
 \alias{reproducibility_score}
 \title{Compute the reproducibility score between two contact matrices.}
 \usage{
-reproducibility_score(mat1, mat2, r = 20, mipr = 5)
+reproducibility_score(mat1, mat2, r = 20, mipr = 5, na.rm = TRUE)
 }
 \arguments{
 \item{mat1}{A \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.}
@@ -14,6 +14,8 @@ reproducibility_score(mat1, mat2, r = 20, mipr = 5)
 \item{r}{The number of componentes used in the comparison.}
 
 \item{mipr}{Threshold for the j-inverse participation ratio (IPR).}
+
+\item{na.rm}{\code{logical} indicating if bins with NA should be removed.}
 }
 \value{
 The reproducibility score between two matrices.

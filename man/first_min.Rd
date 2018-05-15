@@ -4,10 +4,12 @@
 \alias{first_min}
 \title{Find first local minimum}
 \usage{
-first_min(x)
+first_min(x, plot = FALSE)
 }
 \arguments{
 \item{x}{A numeric \code{vector} of values.}
+
+\item{plot}{\code{logical} indicating if histogram should be plotted.}
 }
 \value{
 A numeric value of the lower local minimum value of the density estimation.
