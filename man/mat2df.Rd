@@ -4,12 +4,14 @@
 \alias{mat2df}
 \title{Transform the contacts of a \code{dgTMatrix} into a \code{data.frame}}
 \usage{
-mat2df(mat, b = NULL)
+mat2df(mat, b = NULL, both = FALSE)
 }
 \arguments{
 \item{mat}{A \code{dgTMatrix} of contacts with genomic bins as \code{row.names}.}
 
-\item{b}{An optional \code{vector} of genomic position (otherwhise, it uses the infromation contained in the \code{row.names}.}
+\item{b}{An optional \code{vector} of genomic position (otherwhise, it uses the information contained in the \code{row.names}.}
+
+\item{both}{A \code{logical} indicating if both (bin index and position) should be returned.}
 }
 \value{
 A \code{data.frame} with the two coordinates (\code{i} and \code{j}) and the number of contacts (\code{x}).

@@ -6,7 +6,7 @@
 \usage{
 plot_matrix(mat, coord, resolution, transformation = logfinite,
   color = colorRampPalette(c("white", "red"))(100), sym = FALSE,
-  trim = 0.01, rotate = FALSE, unit_x_axis = 1000000,
+  trim = 0.01, rotate = FALSE, unit_x_axis = 1e+06,
   label_x_axis = "Genomic Position / Mbp", na.col = "white", ...)
 }
 \arguments{
