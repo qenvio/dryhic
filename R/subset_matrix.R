@@ -13,7 +13,6 @@ subset_matrix <- function(mat, region){
     if(!(class(mat) == "dgTMatrix" | class(mat) == "dgCMatrix")) stop("mat should be a sparse matrix")
 
     chrom <- gsub(":.*$", "", region)
-    rr <- gsub("^.*:", "", region) %>% strsplit("-") %>% unlist %>% as.numeric
 
     bins <- rownames(mat)
 
@@ -21,12 +20,23 @@ subset_matrix <- function(mat, region){
                        pos = gsub("^.*:", "", bins) %>% as.numeric,
                        i = 1:length(bins))
 
-    if(is.na(rr)){
+    if(!grepl("-", region)){
         i <- filter(bins, chr == chrom) %$% i
     }else{
+        rr <- gsub("^.*:", "", region) %>% strsplit("-") %>% unlist() %>% as.numeric()
         i <- filter(bins, chr == chrom, pos >= rr[1], pos <= rr[2]) %$% i
     }
 
-    mat[i,i]
+    out <- mat[i,i]
+
+    b <- attr(mat, "b")
+
+    if(!is.null(b)){
+
+        attr(out, "b") <- b[i]
+
+    }
+
+    out
 
 }
