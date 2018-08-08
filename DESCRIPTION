@@ -15,5 +15,6 @@ Imports: magrittr,
     Matrix,
     mgcv,
     dplyr,
-    RSpectra
+    RSpectra,
+	data.table
 Suggests: dryhicdata
