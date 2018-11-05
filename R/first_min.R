@@ -7,15 +7,21 @@
 #' @importFrom dplyr arrange
 #' @param x A numeric \code{vector} of values.
 #' @param plot \code{logical} indicating if histogram should be plotted.
+#' @param zero_rm \code{logical} indicating if zeros should be removed from calculation.
 #' @return A numeric value of the lower local minimum value of the density estimation.
 #' @export
 #' @examples
 #' plot(0)
 
-first_min <- function(x, plot = FALSE){
+first_min <- function(x, plot = FALSE, zero_rm = FALSE){
 
     x <- na.omit(x)
-    x <- x[x > 0 & x < quantile(x, .99)]
+
+    if(zero_rm){
+        x <- x[x > 0 & x < quantile(x, .99)]
+    }else{
+        x <- x[x < quantile(x, .99)]
+    }
 
     out <- density(x) %>%
         with(data.frame(x = x, y = y)) %>%
