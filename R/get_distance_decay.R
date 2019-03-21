@@ -42,6 +42,14 @@ get_distance_decay <- function(mat, reso){
         
         mat <- mat[i_good, i_good]
 
+        dec <- mat2df(mat, both = TRUE) %>%
+            mutate(d = abs(i_d - j_d),
+                   db = abs(i - j),
+                   xc = x / (n_good - db)) %>%
+            group_by(d) %>%
+            summarize(e = sum(xc, na.rm = T)) %>%
+            ungroup()
+        
         binpos <- rownames(mat) %>%
             gsub("^.*:", "", .) %>%
             as.numeric
@@ -55,11 +63,7 @@ get_distance_decay <- function(mat, reso){
             group_by(d) %>%
             summarize(e = sum(xc, na.rm = T)) %>%
             ungroup()
-
-        dat$e[dat$d == 0] <- 2 * dat$e[dat$d == 0]
-
-        dat$e <- dat$e / dat$e[dat$d == 0] * mean(diag(mat))
-    
+   
         return(dat)
 
     }
