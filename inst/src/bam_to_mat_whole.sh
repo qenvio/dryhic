@@ -26,6 +26,8 @@ filterin=0
 filterex=783
 resolution=100000
 
+base_dir=$(dirname "$(readlink -f "$0")")
+
 while getopts "hf:F:w:r:" opt
 do
 
@@ -65,5 +67,4 @@ region=$2
 # make contact matrix
 
 samtools view -f $filterin -F $filterex $inbam $region | \
-	awk -v w=$resolution -v OFS="\t" \
-    '{if($7 == "=") $7 = $3; i = int($4 / w) * w; j = int($8 / w) * w; a[$3 OFS i OFS $7 OFS j] += 1}END{for(k in a) print k, a[k]}'
+	$base_dir/reads_to_bins_whole.awk -v w=$resolution

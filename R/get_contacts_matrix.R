@@ -4,6 +4,7 @@
 #' @import Matrix
 #' @import magrittr
 #' @importFrom dplyr mutate
+#' @importFrom data.table fread
 #' @param inbam HiC-BAM file
 #' @param resolution Desired resolution (bin size)
 #' @param pos A vector with the genomic position IDs to be included in the output. It can be the \code{bin} column of the output from \code{\link{make_bins}}
@@ -19,35 +20,16 @@
 get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
                                 whole = F, filtin = 0, filtex = 783){
 
-    max_size <- 5 # max size of bam in Gb
-    
-    file_size <- file.info(inbam)$size  / 1024 / 1024 / 1024
 
     if(is.null(region)) whole <- TRUE
     
     if(whole){
-
-        if(file_size > max_size){
-            
-            script_file <- system.file("src", "bam_to_mat_whole_big.sh", package = "dryhic")
-
-        }else{
-            
-            script_file <- system.file("src", "bam_to_mat_whole.sh", package = "dryhic")
-
-        }
-
+        
+        script_file <- system.file("src", "bam_to_mat_whole.sh", package = "dryhic")
+        
     }else{
-
-        if(file_size > max_size){
-            
-            script_file <- system.file("src", "bam_to_mat_big.sh", package = "dryhic")
-
-        }else{
             
             script_file <- system.file("src", "bam_to_mat.sh", package = "dryhic")
-
-        }
         
     }
     
@@ -57,8 +39,7 @@ get_contacts_matrix <- function(inbam, resolution, pos, region = NULL,
           "-w", resolution,
           inbam,
           region) %>%
-        pipe %>%
-        read.delim(head = F, stringsAsFactors = F) %>%
+        fread(cmd = ., header = FALSE) %>%
         mutate(b1 = factor(paste(V1, V2, sep = ":"), levels = pos),
                b2 = factor(paste(V3, V4, sep = ":"), levels = pos)) %>%
         xtabs(V5 ~ b1 + b2, ., sparse = T)

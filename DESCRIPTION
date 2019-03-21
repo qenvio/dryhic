@@ -1,6 +1,6 @@
 Package: dryhic
 Title: Some Functions to Handle HiC Data
-Version: 0.0.0.9000
+Version: 0.0.0.9100
 Authors@R: person("Enrique", "Vidal", email = "enrique.vidal@crg.eu", role = c("aut", "cre"))
 Description: A collection of functions to create and manipulate HiC contact
     matrices in R: Data retrieval, sumbsampling, resolution changes, bias
@@ -15,5 +15,7 @@ Imports: magrittr,
     Matrix,
     mgcv,
     dplyr,
+	data.table,
     RSpectra
-Suggests: dryhicdata
+Suggests: dryhicdata,
+    hicfeatures
