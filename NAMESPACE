@@ -3,6 +3,7 @@
 export(ICE)
 export(correct_mat_from_b)
 export(evec_dist)
+export(first_max)
 export(first_min)
 export(fitcnv)
 export(get_contacts_matrix)
