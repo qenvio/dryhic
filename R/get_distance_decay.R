@@ -4,6 +4,8 @@
 #' @import magrittr
 #' @import Matrix
 #' @importFrom dplyr mutate
+#' @importFrom dplyr filter
+#' @importFrom dplyr pull
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
 #' @importFrom dplyr ungroup
@@ -31,39 +33,19 @@ get_distance_decay <- function(mat, reso){
         
     }else{
         
-        b <- attr(mat, "b")
-        
-        i_bad <- is.na(b) %>% which
-        i_good <- seq(1, nrow(mat)) %>% setdiff(i_bad)
-
-        n_bad <- length(i_bad)
-        n_good <- length(i_good)
-        n <- n_good + n_bad
-        
-        mat <- mat[i_good, i_good]
-
-        dec <- mat2df(mat, both = TRUE) %>%
-            mutate(d = abs(i_d - j_d),
-                   db = abs(i - j),
-                   xc = x / (n_good - db)) %>%
-            group_by(d) %>%
-            summarize(e = sum(xc, na.rm = T)) %>%
-            ungroup()
-        
-        binpos <- rownames(mat) %>%
-            gsub("^.*:", "", .) %>%
-            as.numeric
-
-        dat <- summary(mat) %>%
-            mutate(di = binpos[i],
-                   dj = binpos[j],
-                   d = abs(di - dj),
-                   db = abs(i - j),
-                   xc = x / (n_good - db)) %>%
-            group_by(d) %>%
-            summarize(e = sum(xc, na.rm = T)) %>%
-            ungroup()
-   
+        n <- nrow(mat)
+        dec <- mat2df(mat, both = T) %>%
+            filter(i >= j) %>%
+            mutate(d = i_d - j_d,
+                   dd = i - j) %>%
+            group_by(d, dd) %>%
+            summarize(s = sum(x, na.rm = T),
+                      na = is.na(x) %>% sum()) %>%
+            ungroup() %>%
+            mutate(e = s / (n - dd - na)) %>%
+            dplyr::select(d, e)
+        return(dec)
+  
         return(dat)
 
     }

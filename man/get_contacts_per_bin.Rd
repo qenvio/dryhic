@@ -4,8 +4,14 @@
 \alias{get_contacts_per_bin}
 \title{Retrieve HiC data per genomic bin}
 \usage{
-get_contacts_per_bin(inbam, resolution, region = NULL, pos, filtin = 0,
-  filtex = 783)
+get_contacts_per_bin(
+  inbam,
+  resolution,
+  region = NULL,
+  pos,
+  filtin = 0,
+  filtex = 783
+)
 }
 \arguments{
 \item{inbam}{HiC-BAM file}
