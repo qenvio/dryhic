@@ -45,8 +45,6 @@ get_distance_decay <- function(mat, reso){
             mutate(e = s / (n - dd - na)) %>%
             dplyr::select(d, e)
         return(dec)
-  
-        return(dat)
 
     }
 
